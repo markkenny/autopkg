@@ -1,2 +1,3 @@
-# jss-recipes
-My recipes
+# JSS Recipes
+
+My recipes. Please be gentle.

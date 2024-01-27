@@ -1,3 +1,3 @@
-# JSS Recipes
+# AutoPKG Download and Package Recipes
 
-My recipes. Please be gentle.
+Learning as I go. Please be gentle. Big mix of XML and YAML.

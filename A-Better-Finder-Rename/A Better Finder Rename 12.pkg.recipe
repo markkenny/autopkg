@@ -5,20 +5,20 @@
 	<key>Comment</key>
 	<string>Created by MK</string>
 	<key>Description</key>
-	<string>Downloads the latest version of A Better Finder Rename 10 and creates a package.</string>
+	<string>Downloads the latest version of A Better Finder Rename 12 and creates a package.</string>
 	<key>Identifier</key>
-	<string>com.github.markkenny.pkg.ABetterFinderRename10</string>
+	<string>com.github.markkenny.pkg.ABetterFinderRename12</string>
 	<key>Input</key>
 	<dict>
 		<key>BUNDLE_ID</key>
-		<string>net.publicspace.abfr10</string>
+		<string>net.publicspace.abfr12</string>
 		<key>NAME</key>
-		<string>A Better Finder Rename 10</string>
+		<string>A Better Finder Rename 12</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>
 	<key>ParentRecipe</key>
-	<string>180.macwiz.download.ABetterFinderRename10</string>
+	<string>180.macwiz.download.ABetterFinderRename12</string>
 	<key>Process</key>
 	<array>
 		<dict>

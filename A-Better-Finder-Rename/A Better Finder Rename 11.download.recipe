@@ -5,15 +5,15 @@
 	<key>Comment</key>
 	<string>Created by MK</string>
 	<key>Description</key>
-	<string>Downloads the latest version of A Better Finder Rename 10.</string>
+	<string>Downloads the latest version of A Better Finder Rename 11.</string>
 	<key>Identifier</key>
-	<string>com.github.markkenny.download.ABetterFinderRename10</string>
+	<string>com.github.markkenny.download.ABetterFinderRename11</string>
 	<key>Input</key>
 	<dict>
 		<key>NAME</key>
-		<string>A Better Finder Rename 10</string>
+		<string>A Better Finder Rename 11</string>
 		<key>SPARKLE_FEED_URL</key>
-		<string>http://www.publicspace.net/app/signed_abfr10.xml</string>
+		<string>http://www.publicspace.net/app/signed_abfr11.xml</string>
 	</dict>
 	<key>MinimumVersion</key>
 	<string>0.6.1</string>

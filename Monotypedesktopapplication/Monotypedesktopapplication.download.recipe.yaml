@@ -1,0 +1,44 @@
+Description: Downloads the latest Monotype desktop app
+Identifier: com.github.markkenny.autopkg.download.monotypedesktopapp
+MinimumVersion: 2.3
+
+Input:
+  NAME: Monotype desktop app
+  VENDOR: Monotype
+  SEARCH_URL: https://support.monotype.com/en/articles/7859096-syncing-and-installing-fonts-with-monotype-app
+  SEARCH_PATTERN: https://monotypeapp.monotype.com/release/\d+/mac/system/DTAppInstaller.pkg.zip
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '%SEARCH_PATTERN%'
+    url: '%SEARCH_URL%'
+
+- Processor: URLDownloader
+  Arguments:
+    url: '%match%'
+
+- Processor: Unarchiver
+  Arguments:
+    archive_format: zip
+    archive_path: '%pathname%'
+    destination_path: '%RECIPE_CACHE_DIR%/unzip'
+    purge_destination: true
+
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpkg/'
+    flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip/DTAppInstaller.pkg'
+    purge_destination: true
+
+- Processor: com.github.nmcspadden.shared/PackageInfoVersioner
+  Arguments:
+    package_info_path: '%RECIPE_CACHE_DIR%/unpkg/PackageInfo'
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Monotype Imaging (9TY7K37N87)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%RECIPE_CACHE_DIR%/unzip/DTAppInstaller.pkg'

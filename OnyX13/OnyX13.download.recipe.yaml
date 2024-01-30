@@ -1,0 +1,18 @@
+Description: Downloads the latest Onyx client for macOS 13 Ventura
+Identifier: com.github.markkenny.autopkg.download.OnyX13
+MinimumVersion: 1.0.1
+
+Input:
+  NAME: Onyx 12
+  DOWNLOAD_URL: https://www.titanium-software.fr/download/13/OnyX.dmg
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/OnyX.app'
+    requirement: anchor apple generic and identifier "com.titanium.OnyX" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = T49MRBL8UL)

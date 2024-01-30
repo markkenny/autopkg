@@ -1,0 +1,32 @@
+Comment: Created by MK 2023 08 14
+Description: Downloads the latest Frame IO
+Identifier: com.github.markkenny.autopkg.download.frameio
+MinimumVersion: 2.3
+
+Input:
+  NAME: FrameIO Transfer
+  SEARCH_URL: https://frame.io/transfer
+  SEARCH_PATTERN: (https://transferapp\.frame\.io/Frame\.io-Transfer/.*?/_index/.*?/darwin/x64/Frame\.io%20Transfer-.*?\.dmg)
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '%SEARCH_PATTERN%'
+    url: '%SEARCH_URL%'
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%match%'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Frame.io Transfer.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Frame.io Transfer.app'
+    requirement: identifier "com.frameio.transfer" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "6D429SHX3Y"

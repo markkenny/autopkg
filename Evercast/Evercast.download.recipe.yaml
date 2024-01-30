@@ -1,0 +1,27 @@
+Comment: Created by MK 2023 08 15
+Description: Downloads the latest version of Evercast.
+Identifier: com.github.markkenny.autopkg.download.Evercast
+MinimumVersion: 2.3
+
+Input:
+  NAME: Evercast
+  DOWNLOAD_URL: https://s3.amazonaws.com/files.evercast.us/Evercast.pkg
+  USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.pkg'
+    request_headers:
+      user-agent: '%USER_AGENT%'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Evercast LLC (H2J9VR2HM2)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

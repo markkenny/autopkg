@@ -1,0 +1,31 @@
+Description: Downloads the latest version of Wireshark.
+Identifier: com.github.markkenny.autopkg.download.Wireshark
+MinimumVersion: 2.3
+
+Input:
+  NAME: Wireshark
+  ARCHITECTURE: Intel
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_flags:
+    - IGNORECASE
+    re_pattern: href="https:\/\/[^"]*(?P<match>osx/Wireshark[^"]*%ARCHITECTURE%[^"]*64\.dmg)"
+    url: https://www.wireshark.org/download.html
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: https://www.wireshark.org/download/%match%
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Wireshark.app/Contents/Info.plist'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Wireshark.app'
+    requirement: identifier "org.wireshark.Wireshark" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "7Z6EMTD2C6"

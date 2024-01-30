@@ -1,0 +1,11 @@
+Comment: Created by MK 2023 09 04
+Description: Downloads the latest version of EBS and creates a package. (Does not include the NDI Runtime) Must be uninstalled if upgrading
+Identifier: com.github.markkenny.autopkg.pkg.EBS3
+ParentRecipe: com.github.markkenny.autopkg.download.EBS3
+MinimumVersion: 2.3
+
+Input:
+  NAME: EBS
+
+Process:
+- Processor: AppPkgCreator

@@ -1,0 +1,23 @@
+Description: Downloads the current release of Tableau Public.
+Identifier: com.github.markkenny.autopkg.download.tableau-public
+MinimumVersion: 2.3
+
+Input:
+  NAME: TableauPublic
+  DOWNLOAD_URL: https://public.tableau.com/s/download/public/mac
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Tableau Software, LLC (QJ4XPRK37C)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%/Tableau Public.pkg'

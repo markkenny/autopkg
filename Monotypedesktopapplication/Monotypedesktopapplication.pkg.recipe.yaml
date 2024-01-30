@@ -1,0 +1,13 @@
+Description: Packages the current release version of Monotype desktop app
+Identifier: com.github.markkenny.autopkg.pkg.monotypedesktopapp
+ParentRecipe: com.github.markkenny.autopkg.download.monotypedesktopapp
+MinimumVersion: 2.3
+
+Input:
+  NAME: Monotype desktop app
+
+Process:
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%RECIPE_CACHE_DIR%/unzip/DTAppInstaller.pkg'

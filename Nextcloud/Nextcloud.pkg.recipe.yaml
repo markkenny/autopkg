@@ -1,0 +1,38 @@
+Description: Downloads the latest version of Nextcloud installer package and renames the package.
+Identifier: com.github.markkenny.autopkg.pkg.Nextcloud
+ParentRecipe: com.github.markkenny.autopkg.download.Nextcloud
+MinimumVersion: 2.3
+
+Input:
+  NAME: Nextcloud
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/*Nextcloud*.pkg'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/payload'
+    pkg_payload_path: '%found_filename%/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/downloads/payload/Applications/Nextcloud.app/Contents/Info.plist'
+    plist_version_key: CFBundleVersion
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%_%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'
+    - '%RECIPE_CACHE_DIR%/downloads/payload'

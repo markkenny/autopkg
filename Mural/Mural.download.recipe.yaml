@@ -1,0 +1,29 @@
+Description: Downloads the latest Mural. 2023 02 13 MK from DerFlounder.
+Identifier: com.github.markkenny.autopkg.download.Mural
+MinimumVersion: 2.3
+
+Input:
+  NAME: Mural
+  VENDOR: Mural
+  SEARCH_URL: https://www.mural.co/mac-app
+  SEARCH_PATTERN: https://download.mural.co/mac-app/Mural-[\S]+\.dmg
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '%SEARCH_PATTERN%'
+    url: '%SEARCH_URL%'
+
+- Processor: URLDownloader
+  Arguments:
+    url: '%match%'
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Mural.app'
+    requirement: identifier "co.mural.macOS" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "823N8XU8B8"
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Mural.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString

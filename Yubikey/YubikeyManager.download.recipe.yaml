@@ -1,0 +1,27 @@
+Description: Download recipe for YubiKey Manager cloned from gerardkok
+Identifier: com.github.markkenny.autopkg.download.YubiKeyManager
+MinimumVersion: 2.3
+
+Input:
+  NAME: YubiKeyManager
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: href=\"(?P<relative_download_url>yubikey-manager-qt-(?P<version>[0-9\.]+)-mac\.pkg)\"
+    url: https://developers.yubico.com/yubikey-manager-qt/Releases/
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%-DL.pkg'
+    url: https://developers.yubico.com/yubikey-manager-qt/Releases/%relative_download_url%
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Yubico Limited (LQA3CS5MM7)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

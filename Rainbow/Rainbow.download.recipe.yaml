@@ -1,0 +1,25 @@
+Comment: Created by MK 2023 03 16
+Description: Downloads the latest version of Rainbow.
+Identifier: com.github.markkenny.autopkg.download.Rainbow
+MinimumVersion: 2.3
+
+Input:
+  NAME: Rainbow
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: https://web.openrainbow.com/downloads/Rainbow_Installer.dmg
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Rainbow.app'
+    requirement: identifier "com.openrainbow.Rainbow" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "BT9E66P673"
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Rainbow.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString

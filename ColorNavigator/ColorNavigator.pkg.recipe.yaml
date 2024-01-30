@@ -1,0 +1,26 @@
+Comment: Taken from com.github.its-unibas.download.AtlassianCompanion
+Description: Downloads the latest version of Atlassian Companion
+Identifier: com.github.markkenny.autopkg.download.AtlassianCompanion
+MinimumVersion: 2.3
+
+Input:
+  NAME: Atlassian Companion
+  DOWNLOAD_URL: https://update-nucleus.atlassian.com/Atlassian-Companion/291cb34fe2296e5fb82b83a04704c9b4/latest/darwin/x64/Atlassian%20Companion.dmg
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Atlassian Companion.app'
+    requirement: identifier "com.electron.companion" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UPXU4CQZ5P
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Atlassian Companion.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString

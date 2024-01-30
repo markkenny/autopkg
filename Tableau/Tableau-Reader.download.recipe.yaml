@@ -1,0 +1,42 @@
+Description: Downloads the current release of Tableau Reader.
+Identifier: com.github.markkenny.autopkg.download.tableau-reader
+MinimumVersion: 2.3
+
+Input:
+  NAME: Tableau Reader
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: https://www.tableau.com/downloads/reader/mac
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Tableau Software, LLC (QJ4XPRK37C)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%/Tableau Reader.pkg'
+
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpacked'
+    flat_pkg_path: '%pathname%/Tableau Reader.pkg'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/expanded'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/unpacked/Tableau App.pkg/payload'
+    purge_destination: true
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/expanded/Tableau Reader*.app/Contents/Info.plist'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%found_filename%'
+    plist_version_key: CFBundleShortVersionString

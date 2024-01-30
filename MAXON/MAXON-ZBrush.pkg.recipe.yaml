@@ -1,0 +1,50 @@
+Description: |
+  Downloads the latest version of Magic Bullet Suite and packages it for installation.
+  NOTE:
+  - If a new plugin-eligible application is installed following the installation of this package, the plugins will not be available until this package is reinstalled"
+Identifier: com.github.markkenny.autopkg.download.MagicBulletSuite
+ParentRecipe: com.github.markkenny.autopkg.download.MagicBulletSuite
+MinimumVersion: 2.3
+
+Input:
+  NAME: MagicBulletSuite
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs: {}
+    pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%found_filename%/Contents/Info.plist'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/Scripts/MagicBulletSuite.app'
+    overwrite: true
+    source_path: '%found_filename%'
+
+- Processor: FileCreator
+  Arguments:
+    file_content: |
+      #!/bin/bash
+      
+      # Determine working directory
+      install_dir=`dirname $0`
+      
+      # Install Magic Bullet Suite using the script from the resources directory
+      "${install_dir}/MagicBulletSuite.app/Contents/Scripts/install.sh""
+    file_mode: '0755'
+    file_path: '%RECIPE_CACHE_DIR%/Scripts/postinstall'
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown: []
+      id: com.maxon.MagicBulletSuite.pkg
+      pkgname: '%NAME%-%version%'
+      pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+      pkgtype: flat
+      scripts: Scripts
+      version: '%version%'

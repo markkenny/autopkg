@@ -1,0 +1,26 @@
+Description: Downloads the latest Nextcloud from GitHub. 20230911 from com.github.andredb90.download.nextcloud.
+Identifier: com.github.markkenny.autopkg.download.Nextcloud
+MinimumVersion: 2.3
+
+Input:
+  NAME: Nextcloud
+
+Process:
+- Processor: GitHubReleasesInfoProvider
+  Arguments:
+    asset_regex: .*\.pkg$
+    github_repo: nextcloud-releases/desktop
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%-%version%.pkg'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Nextcloud GmbH (NKUJUXUJ3B)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

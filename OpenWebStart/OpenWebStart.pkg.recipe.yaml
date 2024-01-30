@@ -1,0 +1,41 @@
+Description: Download the latest release of the OpenWebStart installer and build a package.
+Identifier: com.github.markkenny.autopkg.pkg.OpenWebStart
+ParentRecipe: com.github.markkenny.autopkg.download.OpenWebStart
+MinimumVersion: '1.0'
+
+Input:
+  NAME: OpenWebStart
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      private/tmp: '1777'
+    pkgroot: '%RECIPE_CACHE_DIR%/pkg'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/pkg/private/tmp/%NAME%.app'
+    source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-%ARCH%-%version%.dmg/OpenWebStart Installer.app'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/pkg/private/tmp/response.varfile'
+    source_path: '%RECIPE_DIR%/OpenWebStart/response.varfile'
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown:
+      - group: wheel
+        path: private
+        user: root
+      - group: wheel
+        path: private/tmp
+        user: root
+      id: com.github.karakun.openwebstart
+      options: purge_ds_store
+      pkgdir: '%RECIPE_CACHE_DIR%'
+      pkgname: '%NAME%-%ARCH%-%version%'
+      scripts: scripts
+      version: '%version%'

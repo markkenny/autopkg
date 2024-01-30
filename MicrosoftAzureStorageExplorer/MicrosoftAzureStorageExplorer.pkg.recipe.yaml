@@ -1,0 +1,17 @@
+Description: Downloads the latest version of Microsoft Azure Storage Explorer and creates a package.
+Identifier: com.github.markkenny.autopkg.pkg.MicrosoftAzureStorageExplorer
+ParentRecipe: com.github.markkenny.autopkg.download.MicrosoftAzureStorageExplorer
+MinimumVersion: 2.3
+
+Input:
+  NAME: Microsoft Azure Storage Explorer
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%RECIPE_CACHE_DIR%/Applications/%NAME%.app'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/Applications'

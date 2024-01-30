@@ -1,0 +1,31 @@
+Comment: Created by MK 2023 09 04
+Description: Downloads the latest version of Evercast EBS.
+Identifier: com.github.markkenny.autopkg.download.EBS3
+MinimumVersion: 2.3
+
+Input:
+  NAME: EBS
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: EBS_(3[\d\.]+)_Install.dmg
+    result_output_var_name: version
+    url: https://www.evercast.us/ebs
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%-%version%.dmg'
+    url: https://files.evercast.us/EBS_%version%_Install.dmg
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/EBS.app'
+    requirement: identifier "ci.cosmosoftware.obs-webrtc" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = H2J9VR2HM2
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/EBS.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString

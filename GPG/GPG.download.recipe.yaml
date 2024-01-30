@@ -1,0 +1,26 @@
+Description: Download recipe for GPG Suite.
+Identifier: com.github.markkenny.autopkg.download.gpg
+MinimumVersion: 2.3
+
+Input:
+  NAME: GPGSuite
+  SPARKLE_FEED_URL: https://gpgtools.org/releases/gpgsuite/appcast.xml
+
+Process:
+- Processor: SparkleUpdateInfoProvider
+  Arguments:
+    appcast_url: '%SPARKLE_FEED_URL%'
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%.dmg'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: GPGTools GmbH (PKV8ZPD836)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%/Install.pkg'

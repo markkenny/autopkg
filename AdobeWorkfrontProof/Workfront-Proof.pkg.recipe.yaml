@@ -1,0 +1,38 @@
+Description: Packages Adobe Workfront Proof
+Identifier: com.github.markkenny.autopkg.pkg.adobe-workfront-proof
+ParentRecipe: com.github.markkenny.autopkg.download.adobe-workfront-proof
+MinimumVersion: 2.3
+
+Input:
+  NAME: Workfront Proof
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/com.proofhq.app.pkg'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/payload'
+    pkg_payload_path: '%found_filename%/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/downloads/payload/Workfront Proof.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%_%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'
+    - '%RECIPE_CACHE_DIR%/downloads/payload'

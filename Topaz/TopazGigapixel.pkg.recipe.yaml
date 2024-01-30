@@ -1,0 +1,13 @@
+Description: Downloads the latest version of Topaz Gigapixel and creates a package.
+Identifier: com.github.markkenny.autopkg.pkg.topaz-gigapixel
+ParentRecipe: com.github.markkenny.autopkg.download.topaz-gigapixel
+MinimumVersion: 2.3
+
+Input:
+  NAME: Topaz Gigapixel
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%pathname%/Topaz Gigapixel AI.app'
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'

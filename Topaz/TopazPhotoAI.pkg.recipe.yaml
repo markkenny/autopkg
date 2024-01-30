@@ -1,0 +1,35 @@
+Comment: Created by MK 2023 12 19
+Description: Downloads the latest version of Topaz Photo AI and creates a versionsed package.
+Identifier: com.github.markkenny.autopkg.pkg.topaz-photo-ai
+ParentRecipe: com.github.markkenny.autopkg.download.topaz-photo-ai
+MinimumVersion: 2.3
+
+Input:
+  NAME: Topaz Photo AI
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/expanded'
+    flat_pkg_path: '%pathname%'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpack'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/Topaz_Photo_AI.pkg/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/unpack/Applications/Topaz Photo AI.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/expanded'
+    - '%RECIPE_CACHE_DIR%/unpack'

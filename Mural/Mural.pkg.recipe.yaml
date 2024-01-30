@@ -1,0 +1,14 @@
+Description: Downloads the latest version of Mural and creates a package.
+Identifier: com.github.markkenny.autopkg.pkg.Mural
+ParentRecipe: com.github.markkenny.autopkg.download.Mural
+MinimumVersion: 2.3
+
+Input:
+  NAME: Mural
+  VENDOR: Mural
+
+Process:
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%pathname%/Mural.app'
+    pkg_path: '%RECIPE_CACHE_DIR%/%VENDOR%_%version%.pkg'

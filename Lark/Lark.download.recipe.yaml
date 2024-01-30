@@ -1,0 +1,32 @@
+Description: Downloads the latest Lark. Apple Silicon set ARCHITECTURE to arm64. For Intel set ARCHITECTURE x64
+Identifier: com.github.markkenny.autopkg.download.lark
+MinimumVersion: 2.3
+
+Input:
+  NAME: Lark
+  ARCHITECTURE: arm64
+  SEARCH_URL: https://www.larksuite.com/api/downloads
+  SEARCH_PATTERN: https://[^\"]+/Lark-darwin_%ARCHITECTURE%-[\d.]+-signed\.dmg
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '%SEARCH_PATTERN%'
+    url: '%SEARCH_URL%'
+
+- Processor: URLDownloader
+  Arguments:
+    filename: '%NAME%-%ARCHITECTURE%.dmg'
+    url: '%match%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Lark.app'
+    requirement: identifier "com.larksuite.larkApp" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JBRN9C6V7T
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Lark.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString

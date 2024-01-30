@@ -1,0 +1,16 @@
+# install4j response file for OpenWebStart 1.8.0
+sys.adminRights$Boolean=true
+sys.fileAssociation.extensions$StringArray="jnlp","jnlpx"
+sys.fileAssociation.launchers$StringArray="313","313"
+sys.installationDir=/Applications/OpenWebStart
+sys.languageId=en
+ows.jvm.manager.server.allowFromJnlp=true
+ows.jvm.manager.updateStrategy=AUTOMATICALLY_DOWNLOAD
+ows.update.activated=false
+ows.update.activated.locked=false
+ows.update.strategy.settings=NEVER
+ows.update.strategy.settings.locked=false
+ows.update.strategy.launch=NEVER
+ows.update.strategy.launch.locked=false
+deployment.proxy.bypass.local=false
+deployment.proxy.type=0

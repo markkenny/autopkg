@@ -8,7 +8,6 @@ Input:
   SEARCH_URL: https://support.monotype.com/en/articles/7859096-syncing-and-installing-fonts-with-monotype-app
   SEARCH_PATTERN: https://monotypeapp.monotype.com/release/\d+/mac/MTFInstaller.zip
 
-
 Process:
   - Processor: URLTextSearcher
     Arguments:
@@ -36,5 +35,3 @@ Process:
         destination_path: "%RECIPE_CACHE_DIR%/unzip"
         purge_destination: true
         archive_format: zip
-
-

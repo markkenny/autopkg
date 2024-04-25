@@ -1,0 +1,64 @@
+Description: Packages the current release version of Monotype Fonts
+Identifier: com.github.markkenny.autopkg.pkg.monotypefonts
+
+ParentRecipe: com.github.markkenny.autopkg.download.monotypefonts
+
+MinimumVersion: "2.3"
+
+Input:
+  NAME: Monotype Fonts
+
+Process:
+  # - Processor: FlatPkgUnpacker
+  #   Arguments:
+  #       flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip/MTFInstaller.pkg"
+  #       destination_path: "%RECIPE_CACHE_DIR%/unpkg/"
+  #       purge_destination: false
+
+#unzip/MTFInstaller.pkg with aa failed
+  # - Processor: PkgPayloadUnpacker
+  #   Arguments:
+  #     destination_path: "%RECIPE_CACHE_DIR%/unpkg"
+  #     pkg_payload_path: "%RECIPE_CACHE_DIR%/unzip/MTFInstaller.pkg"
+  #     purge_destination: false
+
+
+# FlatPkgUnpacker GETS DTAppInstaller.pkg
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpkg"
+      flat_pkg_path: "%RECIPE_CACHE_DIR%/unzip/MTFInstaller.pkg"
+      purge_destination: false
+      skip_payload: true
+
+#Hmmm /unpkg/DTAppInstaller.pkg with aa failed
+  # - Processor: PkgPayloadUnpacker
+  #   Arguments:
+  #     destination_path: "%RECIPE_CACHE_DIR%/unpkg2"
+  #     pkg_payload_path: "%RECIPE_CACHE_DIR%/unpkg/DTAppInstaller.pkg"
+  #     purge_destination: false
+
+# : PkgExtractor: Error: Info.plist not found in pkg
+  # - Processor: PkgExtractor
+  #   Arguments:
+  #     extract_root: "%RECIPE_CACHE_DIR%/unpkg2"
+  #     pkg_path: "%RECIPE_CACHE_DIR%/unpkg/DTAppInstaller.pkg"
+  #     purge_destination: false
+
+# FlatPkgUnpacker: Error: extraction of /Users/autopkguser/Git/autopkg/CACHE/com.omnicomgroup.autopkg.monotypefonts/unpkg/DTAppInstaller.pkg with xar failed: Error opening xar archive: /Users/autopkguser/Git/autopkg/CACHE/com.omnicomgroup.autopkg.monotypefonts/unpkg/DTAppInstaller.pkg
+  # - Processor: FlatPkgUnpacker
+  #   Arguments:
+  #     destination_path: "%RECIPE_CACHE_DIR%/unpkg2"
+  #     flat_pkg_path: "%RECIPE_CACHE_DIR%/unpkg/DTAppInstaller.pkg"
+  #     purge_destination: false
+  #     skip_payload: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%RECIPE_CACHE_DIR%/unzip/MTFInstaller.pkg/Applications/Monotype Fonts/Application/Monotype Fonts.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
+
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
+      source_pkg: "%pathname%"

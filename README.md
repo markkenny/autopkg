@@ -17,11 +17,24 @@ Investigate
 XML recipes to YAML.
 https://github.com/grahampugh/plist-yaml-plist
 
+
+## Checking Linting before publishing
+
+### Simple Checks for recipes
+```
+myRepo="/Users/me/autopkg-recipes"
+find $myRepo -iname "*.recipe" -exec plutil -lint "{}" '+'
+```
+
+### Bigger checking for yamls and more
+[homebysix Pre-Commit Hooks for Mac Admins}(https://github.com/homebysix/pre-commit-macadmin?tab=readme-ov-file)
+Wow. Learning every day!
+
 ### ERROR AS OF JANUARY 2024
 There eems to be an issue with ruaml.yaml 0.18 and above. 0.18.0 runs, but fails silently, 0.18.1 and above errors as you are seeing.
 Workaround is uninstall any 0.18 version and and install 0.17.40.
 ```
-python3 -m pip uninstall ruamel.yaml  
+python3 -m pip uninstall ruamel.yaml
 python3 -m pip install -U ruamel.yaml==0.17.40 --user
 ```
 # Links

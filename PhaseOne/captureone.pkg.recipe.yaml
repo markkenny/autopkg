@@ -16,7 +16,7 @@ Process:
       pkgdirs:
         Applications: "0775"
       pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"
-  
+
   - Processor: Copier
     Arguments:
       destination_path: "%pkgroot%/Applications/Capture One.app"

@@ -1,5 +1,5 @@
 # NOTES
-No longer being updated by Monotype, new application is named Monotype Fonts. 
+No longer being updated by Monotype, new application is named Monotype Fonts.
 See my othre recipes.
 
 <dict>

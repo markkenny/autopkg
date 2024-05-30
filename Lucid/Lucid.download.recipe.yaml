@@ -1,4 +1,4 @@
-Description: Downloads the current version of Lucid. MK 20240416 as URL changed 
+Description: Downloads the current version of Lucid. MK 20240416 as URL changed
 
 Identifier: com.github.markkenny.autopkg.download.lucid
 
@@ -26,8 +26,7 @@ Process:
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: "%pathname%"
-      expected_authority_names: 
+      expected_authority_names:
         - "Developer ID Installer: LucidLink Corp. (Y4KMJPU2B4)"
         - Developer ID Certification Authority
         - Apple Root CA
-

@@ -1,4 +1,4 @@
-Description: Downloads the latest Monotype Fonts. MK 2024 04 24 
+Description: Downloads the latest Monotype Fonts. MK 2024 04 24
 
 Identifier: com.github.markkenny.autopkg.download.monotypefonts
 MinimumVersion: "2.3"
@@ -24,7 +24,7 @@ Process:
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: "%RECIPE_CACHE_DIR%/unzip/MTFInstaller.pkg"
-      expected_authority_names: 
+      expected_authority_names:
         - "Developer ID Installer: Monotype Imaging (9TY7K37N87)"
         - Developer ID Certification Authority
         - Apple Root CA

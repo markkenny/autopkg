@@ -1,3 +1,3 @@
 # NOTES
 
-No longer in use by owner. 
+No longer in use by owner.

@@ -1,3 +1,5 @@
+# NOTES
+
 https://files.evercast.us/EBS_2.6.8_Install.dmg
 
 https://files.evercast.us/EBS_3.0.1_Install.dmg

@@ -1,3 +1,7 @@
+# NOTES
+No longer being updated by Monotype, new application is named Monotype Fonts. 
+See my othre recipes.
+
 <dict>
     <key>Processor</key>
     <string>FlatPkgUnpacker</string>

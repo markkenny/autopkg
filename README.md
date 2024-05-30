@@ -1,9 +1,6 @@
 # AutoPKG Download and Package Recipes
 Learning as I go. Please be gentle.
-A repo for recipes I can't find elsewhere. Mostly taken from others' work, but written worsely ;-) and not enough attribution given. Myuapologies. If you see your code, please let me know so I can credit you.
-
-# Thanks
-Would never have got this far without MacAdmins Slack and the generosity with their knowledge and time from [ntmatter](https://github.com/ntmatter/), [GeekyGordo](https://geekygordo.com/), [DerFlounder](https://github.com/rtrouton/), [MacMule](https://github.com/macmule/), [jazzace](https://github.com/jazzace) and [grahampugh](https://github.com/grahampugh/).
+A repo for recipes I can't find elsewhere. Mostly taken from others' work, but written worselyer ;-) and not enough attribution given. My apologies. If you see your code, please let me know so I can credit you.
 
 # My notes
 ## How to use URLTextSearcher Processor
@@ -31,3 +28,7 @@ python3 -m pip install -U ruamel.yaml==0.17.40 --user
 [autopkg](https://github.com/autopkg/)
 [jamf-uploader](https://github.com/grahampugh/jamf-upload)
 [Noteworthy autopkg processors](https://github.com/autopkg/autopkg/wiki/Noteworthy-Processors)
+
+
+# Thanks
+Would never have got this far without MacAdmins Slack and the generosity with their knowledge and time from [ntmatter](https://github.com/ntmatter/), [GeekyGordo](https://geekygordo.com/), [DerFlounder](https://github.com/rtrouton/), [MacMule](https://github.com/macmule/), [jazzace](https://github.com/jazzace) and [grahampugh](https://github.com/grahampugh/).
